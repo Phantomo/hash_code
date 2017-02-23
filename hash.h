@@ -16,6 +16,7 @@ typedef struct      s_lst
     int             requests;
     int             caches_amount;
     int             cache_size;
+    int             *vid_size;
 }                   desc_lst;
 
 typedef struct      s_ep

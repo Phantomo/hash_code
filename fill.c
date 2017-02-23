@@ -1,4 +1,6 @@
-void 	ignore_fill(int **ignore, desc_lst main, int *cache)
+#include "hash.h"
+
+void 	ignore_fill(int **ignore, desc_lst *main, int *cache)
 {
 	int i;
 
@@ -13,7 +15,7 @@ void 	ignore_fill(int **ignore, desc_lst main, int *cache)
 	}
 }
 
-void	check_ignore(int *ignore, int size)
+int		check_ignore(int *ignore, int size)
 {
 	int i;
 
@@ -43,20 +45,17 @@ int 	find_best_cache(int num_c, int *request, int *ignore, int *cache_size)
 	return (id);
 }
 
-void	choose(desc_lst main, ep_lst ep, int **cache_size, int ***rez)
+void	choose(desc_lst *main, ep_lst *ep, int **cache_size, int ***rez)
 {
-	int i;
 	int id_cache;
 	int *ignore;
 	int id_cor_v;
 
-	id_max_cache = 0;
-	i = 0;
-	ignore = (int*)malloc(sizeof(int) * caches_amount);
+	ignore = (int*)malloc(sizeof(int) * main->caches_amount);
 	ignore_fill(&ignore, main, ep->cache);
 	while (check_ignore(ignore, main->caches_amount))
 	{
-		if ((id_cache = find_best_cache(main->caches_amount, ep->request, ignore, *cache_size)) == -1)
+		if ((id_cache = find_best_cache(main->caches_amount, ep->requests, ignore, *cache_size)) == -1)
 			break ;
 		while ((id_cor_v = suitable_video_id(main, ep, *rez, (*cache_size)[id_cache])) != -1)
 		{
